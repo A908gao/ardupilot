@@ -92,7 +92,7 @@ bool VTOL_Assist::should_assist(float aspeed, bool have_airspeed)
     // assistance due to Q_ASSIST_SPEED
     // if option bit is enabled only allow assist with real airspeed sensor
     speed_assist = (have_airspeed && aspeed < speed) && 
-       (!quadplane.option_is_set(QuadPlane::OPTION::DISABLE_SYNTHETIC_AIRSPEED_ASSIST) || plane.ahrs.using_airspeed_sensor());
+       (!quadplane.option_is_set(QuadPlane::Option::DISABLE_SYNTHETIC_AIRSPEED_ASSIST) || plane.ahrs.using_airspeed_sensor());
 
     const uint32_t now_ms = AP_HAL::millis();
     const uint32_t tigger_delay_ms = delay * 1000;
@@ -174,7 +174,7 @@ bool VTOL_Assist::check_VTOL_recovery(void)
             quadplane.force_fw_control_recovery = false;
             quadplane.attitude_control->reset_target_and_rate(false);
 
-            if (ahrs.groundspeed() > quadplane.wp_nav->get_default_speed_NE_cms()*0.01) {
+            if (ahrs.groundspeed() > quadplane.wp_nav->get_default_speed_NE_ms()) {
                 /* if moving at high speed also reset position
                    controller and height controller
 
